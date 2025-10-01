@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from . import  serializers
 from rest_framework import status
-
+from rest_framework import viewsets
 from .serializers import HelloSerializer
+
 
 
 class HelloApiView(APIView):
@@ -35,12 +36,10 @@ class HelloApiView(APIView):
     def put(self, request, pk=None):
         """handles updating an object"""
 
-
         return Response({'message': 'put'})
 
     def patch(self, request, pk=None):
         """patch request, only updates fields provides in the request """
-
 
         return Response({'message': 'patch'})
 
@@ -51,3 +50,16 @@ class HelloApiView(APIView):
         return Response({'message': 'delete'})
 
 
+class HelloViewSet(viewsets.ViewSet):
+    """test api viewSet"""
+    def list(self, request):
+        """return a hello message"""
+
+        a_viewset = [
+            'Uses actions (list, create, retrieve, update, partial_update)',
+            'Automatically maps to URLs using Routers',
+            'Provides more functionality with less code'
+
+        ]
+
+        return Response({'message': 'Hello!', 'a_viewset': a_viewset})
