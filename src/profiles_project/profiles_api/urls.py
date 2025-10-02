@@ -11,3 +11,4 @@ urlpatterns = [
     path('hello_view/', views.HelloApiView.as_view(), name='hello_view'),
     path(r'', include(router.urls)),
 ]
+

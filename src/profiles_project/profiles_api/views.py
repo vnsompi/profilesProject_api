@@ -5,6 +5,8 @@ from . import  serializers
 from rest_framework import status
 from rest_framework import viewsets
 from . import  models
+from . import  permissions
+from rest_framework.authentication import TokenAuthentication
 from .serializers import HelloSerializer
 
 
@@ -105,3 +107,5 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     """"handles ViewSet  for user profile"""
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnProfile,)
