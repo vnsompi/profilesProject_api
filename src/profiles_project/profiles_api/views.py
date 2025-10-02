@@ -9,6 +9,11 @@ from . import  permissions
 from rest_framework.authentication import TokenAuthentication
 from .serializers import HelloSerializer
 from rest_framework import filters
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+
+
 
 
 
@@ -112,3 +117,20 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.UpdateOwnProfile,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name','email',)
+
+
+class LoginViewSet(viewsets.ViewSet):
+    """checks  email and password and returns an auth token"""
+
+    serializer_class = AuthTokenSerializer
+
+    def create(self, request):
+        """Validate user credentials and return token"""
+
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response({'token': token.key}, status=status.HTTP_200_OK)
