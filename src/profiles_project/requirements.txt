@@ -4,3 +4,4 @@ djangorestframework==3.6.2
 pytz==2025.2
 sqlparse==0.5.3
 tzdata==2025.2
+uwsgi==2.0.15
